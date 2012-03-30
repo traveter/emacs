@@ -1,0 +1,27 @@
+;; (require 'linum)
+;; (global-linum-mode t)
+;; (setq linum-format "%4d")
+;; (defun linum-toggle()
+;;   (interactive)
+;;   (linum-mode)
+;;   )
+;;(global-set-key [f7] 'linum-toggle)
+(global-set-key [f7] 'linum-mode)
+;; (defadvice linum-on(around my-linum-w3m-on() activate)
+;;   (unless ;; (or (eq major-mode 'w3m-mode)
+;;       (string-match "^[\s\*]$*" (buffer-name))
+;;     ad-do-it))
+
+;(require 'cedet)
+;(require 'ecb)
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+(global-auto-complete-mode t)
+(ac-config-default)
+
+(ac-set-trigger-key "TAB")
+(setq ac-auto-start nil
+      ac-dwim t
+      ac-use-menu-map t)
+(define-key ac-menu-map (kbd "C-n") 'ac-next)
+(define-key ac-menu-map (kbd "C-p") 'ac-previous)
