@@ -10,7 +10,9 @@
 (global-set-key "\M-g" 'goto-line)
 
 (global-set-key (kbd "\C-xe") 'eval-current-buffer)
-(defun duplicate-line-backward (&optional arg)
+
+;; 行のコピーを挿入
+(defun duplicate-line-backward ()
   "Duplicate the current line backward."
   (interactive "*")
   (save-excursion
@@ -19,36 +21,37 @@
             (line-beginning-position)
             (line-end-position))))
       (message contents)
-      (if (eq arg 1) (setq contents (concat "/* " contents " */")))
+;      (if (eq arg 1) (setq contents (concat "/* " contents " */")))
       (forward-line 1)
       (insert contents ?\n)
     )))
-(defun duplicate-and-comment-line (n)
-  (interactive "p")
-  (save-excursion
-    (let start end)
-    (cond (mark-active
-	   (setq start (region-beginning) end (region-end)))
-	  (t
-	   (beginning-of-line)
-	   (setq start (point))
-	   (forward-line)
-	   (setq end (point))))
-    (kill-ring-save start end)
-    (if (= 4 n) ; only C-u (...)
-	(progn
-	  (comment-region start end)
-	  (yank))
-      (dotimes (i (or n 1)) (yank)))
+
+;; 範囲選択がactive  : 範囲内をコピー貼り付け
+;; 範囲選択がinactive: カーソル行の先頭から範囲選択、カーソルは行末に移動
+(defun region-select-to-line ()
+  (interactive)
+;  (if mark-active
+;      (set-mark (line-end-position))
+  (if mark-active
+      (progn
+	(kill-ring-save (region-beginning) (region-end))
+	(insert ?\n)
+	(yank)
+      )
+    (set-mark  (save-excursion
+		 (line-end-position)
+		 (line-beginning-position)
+		 ))
+    (end-of-line)
     ))
 
 (global-set-key (kbd "M-n") '(lambda () (interactive)
 			       (goto-line (+ (count-lines (point-min) (point)) (/ (frame-height) 3)))))
 (global-set-key (kbd "M-p") '(lambda () (interactive)
 			       (goto-line (- (count-lines (point-min) (point)) (/ (frame-height) 3)))))
-(global-set-key (kbd "C-M-c") '(lambda () (interactive) (duplicate-line-backward 1)))
+(global-set-key (kbd "C-M-c") 'duplicate-line-backward)
 ;; (global-set-key (kbd "C-M-j") '(lambda () (interactive) (duplicate-line-backward)))
-(global-set-key (kbd "C-M-j") '(lambda () (interactive) (duplicate-and-comment-line ())))
+(global-set-key (kbd "C-M-j") 'region-select-to-line)
 
 (require 'tabbar)
 (tabbar-mode)
