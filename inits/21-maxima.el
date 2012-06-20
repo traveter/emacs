@@ -1,0 +1,8 @@
+(autoload 'maxima-mode "maxima" "Maxima mode" t)
+(autoload 'maxima "maxima" "Maxima interaction" t)
+(autoload 'imaxima "imaxima" "Frontend for maxima with Image support" t)
+(autoload 'imath-mode "imath" "Imath mode for math formula input" t)
+(setq exec-path (cons "~/../Maxima-5.27.0/bin" exec-path))
+(setq imaxima-use-maxima-mode-flag t)
+(setq imaxima-gs-program "gswin32c.exe")
+(setq imaxima-tmp-dir "Z:/TEMP")
