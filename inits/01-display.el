@@ -2,8 +2,8 @@
       (append
        '((width            . 110)
          (height           . 60)
-         (top              . 50)
-	 (left             . 10)
+         (top              . 40)
+	 (left             . 8)
 	 ;(alpha            . 98)
 	 (font             . "Ricty")
 	 (cursor-color     . "LightSkyBlue")
@@ -46,7 +46,7 @@
 ;; (setq hl-line-face 'underline) ; 下線
 (global-hl-line-mode)
 
-(scroll-bar-mode nil)
+(scroll-bar-mode -1)
 (global-set-key [f6] 'toggle-scroll-bar)
 
 (menu-bar-mode -1)

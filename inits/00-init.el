@@ -1,3 +1,16 @@
+;; マクロ定義
+(defmacro req (lib &rest body)
+  `(when (locate-library ,(symbol-name lib))
+     (require ',lib) ,@body))
+
+;; マクロ定義
+(defmacro lazyload (func lib &rest body)
+  `(when (locate-library ,lib)
+     ,@(mapcar (lambda (f) `(autoload ',f ,lib nil t)) func)
+     (eval-after-load ,lib
+       '(progn
+          ,@body))))
+
 (defmacro define-keys (mode-map &rest body)
   "特定のキーマップをまとめて設定する"
   `(progn
@@ -19,5 +32,14 @@
            (autoload function file docstring interactive type))
          t )))
 
-(require 'idle-require)
+(defmacro user-emacs-path (path)
+  (concat user-emacs-directory path)
+  )
+
+(defmacro user-emacs-cache-path (path)
+  (concat user-emacs-directory "cache/" path)
+  )
+
+(req deferred)
+;; (req idle-require)
 ;; (idle-require-mode 1)

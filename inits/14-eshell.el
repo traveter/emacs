@@ -22,6 +22,16 @@
 (global-set-key [(C cn)] 'multi-term-next)
 (global-set-key [(C cp)] 'multi-term-prev)
 
+(deferred:$
+  (deferred:next
+    (lambda ()
+      (require 'pcomplete)
+      (add-to-list 'ac-modes 'eshell-mode)
+      ;; (ac-define-source pcomplete
+      (ac-define-source pcomplete
+	'((candidates . pcomplete-completions)))
+      )))
+
 (defun nm-eshell-pcomplete ()
   (interactive)
   (let ((ac-sources '(ac-source-pcomplete
@@ -43,12 +53,19 @@
  (let ((inhibit-read-only t))
    (erase-buffer)))
 
+(defun pcomplete/sudo ()
+  "Completion rules for the `sudo' command."
+  (let ((pcomplete-help "complete after sudo"))
+    (pcomplete-here (pcomplete-here (eshell-complete-commands-list)))))
+
 (defun my-ac-eshell-mode ()
   (setq ac-sources
         '(ac-source-pcomplete
           ac-source-words-in-buffer
           ac-source-dictionary)))
 
+;; eshell
+(setq eshell-directory-name "~/.emacs.d/cache/eshell/")
 (global-set-key (kbd "C-c e") '(lambda () (interactive) (eshell)))
 (add-hook 'eshell-mode-hook
           '(lambda ()
@@ -62,12 +79,8 @@
 	       ;;補完候補がこの数値以下だとサイクルせずに候補表示
 	       (setq eshell-cmpl-cycle-cutoff-length 5)
 	       (setq eshell-hist-ignoredups t)
-	       (require 'pcomplete)
-	       (add-to-list 'ac-modes 'eshell-mode)
-	       (ac-define-source pcomplete
-		 '((candidates . pcomplete-completions)))
-	       (my-ac-eshell-mode)
 
+	       (my-ac-eshell-mode)
 	       (define-keys eshell-mode-map
 		 ((kbd "TAB") 'nm-eshell-pcomplete)
 		 ([(C i)] 'nm-eshell-auto-complete)
@@ -85,7 +98,6 @@
 	       )))
 (eval-after-load "em-alias"
   '(progn
-
      ))
 
 ;; より下に記述した物が PATH の先頭に追加されます

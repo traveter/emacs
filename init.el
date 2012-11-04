@@ -1,5 +1,5 @@
 ;Add-to-load-path
-(let ((default-directory (expand-file-name "~/.emacs.d/lisp")))
+(let ((default-directory (expand-file-name "~/.emacs.d/elpa")))
   (add-to-list 'load-path default-directory)
   (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
       (normal-top-level-add-subdirs-to-load-path)))
@@ -27,4 +27,5 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- )
+ '(mumamo-background-chunk-major ((((class color) (min-colors 88) (background dark)) (:background "SteelBlue4"))))
+ '(mumamo-background-chunk-submode1 ((((class color) (min-colors 88) (background dark)) (:background "SpringGreen4")))))
