@@ -1,0 +1,7 @@
+# name : foreach 
+# key : foreach
+# contributor : Erik L. Arneson <dybbuk@LNouv.com>
+# --
+foreach from='$1' item='${2:loop_variable}'${3: name='${4:loop_name}'}${5: key='${6:key_var}'}}
+$0
+{/foreach}

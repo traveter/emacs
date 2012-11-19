@@ -1,0 +1,7 @@
+# name : section
+# key : section 
+# contributor : Erik L. Arneson <dybbuk@LNouv.com>
+# --
+section loop='${1:variable}'${2: name='${3:section_name}'}${4: start=${5:0}}}
+  $0
+{/section}

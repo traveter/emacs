@@ -1,0 +1,7 @@
+# name : {literal} ... {/literal}
+# key : literal 
+# contributor : Erik L. Arneson <dybbuk@LNouv.com>
+# --
+literal}
+  $0
+{/literal}

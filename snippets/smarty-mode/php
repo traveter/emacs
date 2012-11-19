@@ -1,0 +1,8 @@
+# -*- snippet -*-
+# name : {php} ... {/php}
+# keys : php 
+# contributor : Erik L. Arneson <dybbuk@LNouv.com>
+# --
+php}
+  $0
+{/php}

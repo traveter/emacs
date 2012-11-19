@@ -1,0 +1,6 @@
+# -*- snippet -*-
+# name : capture
+# key : capture 
+# contributor : Erik L. Arneson <dybbuk@LNouv.com>
+# --
+capture${1: name='$2'}${3: assign='$4'}}$0

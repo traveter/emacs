@@ -1,0 +1,6 @@
+# -*- snippet -*-
+# name : fetch 
+# keys : fetch
+# contributor : Erik L. Arneson <dybbuk@LNouv.com>
+# --
+fetch file='${1:http://somewhere/}'${2: assign='$3'}}$0

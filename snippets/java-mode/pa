@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+#name : package
+#key : pa
+# --
+package ${1:`(nth 1 (reverse (split-string default-directory "/")))`};$0

@@ -1,0 +1,8 @@
+# -*- snippet -*-
+# name : {strip} ... {/strip}
+# key : strip 
+# contributor : Erik L. Arneson <dybbuk@LNouv.com>
+# --
+strip}
+  $0
+{/strip}

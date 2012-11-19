@@ -1,0 +1,5 @@
+# name : assign
+# key : assign
+# contributor : Erik L. Arneson <dybbuk@LNouv.com>
+# --
+assign var='${1:variable}' value='$2'}

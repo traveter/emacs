@@ -1,0 +1,5 @@
+# name : cycle
+# key : cycle 
+# contributor : Erik L. Arneson <dybbuk@LNouv.com>
+# --
+cycle values='${1:val1,val2}'${2: name='${3:cycle_name}'}${4: assign='${5:variable}'}}

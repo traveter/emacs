@@ -1,0 +1,5 @@
+# name : if ...
+# key : if 
+# contributor : Erik L. Arneson <dybbuk@LNouv.com>
+# --
+if ${1:condition}}$0{/if}
