@@ -22,20 +22,20 @@
 (global-set-key [(C cn)] 'multi-term-next)
 (global-set-key [(C cp)] 'multi-term-prev)
 
-;; (defun nm-eshell-pcomplete ()
-;;   (interactive)
-;;   (let ((ac-sources '(ac-source-pcomplete
-;; 		      ac-source-filename)))
-;;     (auto-complete)))
+(defun nm-eshell-pcomplete ()
+  (interactive)
+  (let ((ac-sources '(ac-source-pcomplete
+		      ac-source-filename)))
+    (auto-complete)))
 
-;; (defun nm-eshell-auto-complete ()
-;;   (interactive)
-;;   (let ((ac-sources '(ac-source-functions
-;; 		      ac-source-variables
-;; 		      ac-source-features
-;; 		      ac-source-symbols
-;; 		      ac-source-words-in-same-mode-buffers)))
-;;     (auto-complete)))
+(defun nm-eshell-auto-complete ()
+  (interactive)
+  (let ((ac-sources '(ac-source-functions
+		      ac-source-variables
+		      ac-source-features
+		      ac-source-symbols
+		      ac-source-words-in-same-mode-buffers)))
+    (auto-complete)))
 
 (defun eshell/clear ()
  "Clear the current buffer, leaving one prompt at the top."
@@ -50,7 +50,8 @@
 
 (defun my-ac-eshell-mode ()
   (setq ac-sources
-        '(ac-source-pcomplete
+        '(
+	  ac-source-pcomplete
 	  ac-source-filename
 	  ac-source-files-in-current-dir
           ac-source-words-in-buffer
@@ -74,15 +75,13 @@
 	       (setq eshell-hist-ignoredups t)
 
 	       (req pcomplete
-		    (add-to-list 'ac-modes 'eshell-mode)
-		    (ac-define-source pcomplete
-		      '((candidates . pcomplete-completions)))
-		    )
+	       	    (ac-define-source pcomplete
+	       	      '((candidates . pcomplete-completions)))
+	       	    )
 	       (my-ac-eshell-mode)
 	       (define-keys eshell-mode-map
-		 ([(tab)] 'auto-complete)
-		 ;; ((kbd "TAB") 'nm-eshell-pcomplete)
-		 ;;((kbd "C-i") 'nm-eshell-auto-complete)
+		 ((kbd "TAB") 'nm-eshell-pcomplete)
+		 ((kbd "C-i") 'nm-eshell-auto-complete)
 		 ((kbd "M-p") 'helm-eshell-history)
 		 ((kbd "C-o") 'helm-esh-pcomplete)
 		 ((kbd "C-a") 'eshell-bol)

@@ -3,7 +3,7 @@
 (setq skk-kakutei-jisyo (user:emacs-path "dic/SKK-JISYO.edict"))
 ;; (require 'skk-autoloads)
 ;; C-x C-j で skk モードを起動
-(define-key global-map (kbd "C-x C-j") 'skk-mode)
+(define-key global-map (kbd "C-x j") 'skk-mode)
 (lazyload (skk-mode) "skk-autoloads"
   ;; .skk を自動的にバイトコンパイル
   (setq skk-byte-compile-init-file t)
