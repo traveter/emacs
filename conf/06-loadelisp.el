@@ -55,13 +55,32 @@
 
 ;; (when (autoload-if-found 'recentf-ext "recentf-ext" nil t)
 ;;   (define-key mode-specific-map "l" 'recentf-open-files))
-(req generic-x)
+(req qwerty
+     (defun dvorak ()
+       "Dvorak keyboard layout:
+-------------------------------------------------------------------------
+| Esc| 1  | 2  | 3  | 4  | 5  | 6  | 7  | 8  | 9  | 0  | *  | ^  | \  |
+-------------------------------------------------------------------------
+| Tab | '  | ,  | .  | p  | y  | f  | g  | c  | r  | l  | =  | [  |     |
+-------------------------------------------------------------------|    |
+| Ctrl | a  | o  | e  | u  | i  | d  | h  | t  | n  | s  | -  | ]  | <- |
+-------------------------------------------------------------------------
+| Shift  | ;  | q  | j  | k  | x  | b  | m  | w  | v  | z  | / | Shift |
+---------------------------------------------------------------------
+"
+       (interactive)
+       (anti-qwerty "',.pyfgcrl=(aoeuidhtns;)-qjkxbmwvz\"<>PYFGCRL+{AOEUIDHTNS$}:QJKXBMWVZ?*_@[]/"
+		    "qwertyuiop@[asdfghjkl;:]zxcvbnm,./\QWERTYUIOP`{ASDFGHJKL+*}ZXCVBNM<>?_-=$()'"))
+     )
 (when (autoload-if-found 'helm-mini "helm-config")
-     (global-set-keys ((kbd "C-c h") 'helm-mini)
-		      ((kbd "C-c C-f") 'helm-find-files)
-		      ((kbd "C-c l") 'helm-recentf)
-		      ))
-
+  (global-set-key (kbd "C-c h") 'helm-mini)
+  (eval-after-load "helm-config"
+    '(progn
+	(global-set-keys ((kbd "C-c C-f") 'helm-find-files)
+			 ((kbd "C-c l") 'helm-recentf)
+			 ((kbd "C-o") 'helm-occur)
+		      ))))
+(my/idle-time-load 6 (req generic-x))
 (my/idle-time-load 2
 		   (autoload 'yas-dropdown-prompt "dropdown-list" nil t)
 		   (req yasnippet
@@ -111,7 +130,7 @@
 ;;      (which-func-mode t)
 ;;      )
 
-(defconst cedet-version "1.0.9")
+;; (defconst cedet-version "1.0.9")
 ;; (defun load-cedet ()
 ;;   "load-cedet."
 ;;   (interactive)

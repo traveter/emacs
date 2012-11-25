@@ -20,22 +20,35 @@
 ;;                    (match-string 2)) (match-beginning 1)) index))
 ;;     (nreverse index)))
 
-
 ;; (load "nxhtml/autostart")
-;; (setq nxhtml-global-minor-mode t
-;;       mumamo-chunk-coloring 'submode-colored
-;;       nxhtml-skip-welcome t
-;;       indent-region-mode t
-;;       rng-nxml-auto-validate-flag nil
-;;       )
-;; (global-set-key [f12] 'mumamo-no-chunk-coloring)
-
-;; (custom-set-faces
-;;  '(mumamo-background-chunk-major
-;;    ((((class color) (min-colors 88) (background dark)) (:background "SteelBlue4")))) ; ここ
-;;  '(mumamo-background-chunk-submode1
-;;    ((((class color) (min-colors 88) (background dark)) (:background "SpringGreen4")))) ; ここ
-;;  )
+(when (autoload-if-found 'smarty-html-mumamo-mode "nxhtml/autostart" nil t)
+  (setq nxhtml-global-minor-mode t
+	mumamo-chunk-coloring 'submode-colored
+	nxhtml-skip-welcome t
+	indent-region-mode t
+	rng-nxml-auto-validate-flag nil
+	)
+  (eval-after-load "nxhtml/autostart"
+    '(progn
+       (defun nxhtml-mode-toggle ()
+	 (interactive)
+	 (if (string-match "smarty" mode-name)
+	   (progn
+	     (nxhtml-mumamo-mode)
+	     (setq my/nxhtml-mode-flg nil))
+	   (smarty-html-mumamo-mode)
+	   (setq my/nxhtml-mode-flg t)
+	   )
+	 (message mode-name)
+	 )
+       (define-keys nxhtml-menu-mode-map ((kbd "<f12>") 'mumamo-no-chunk-coloring)
+	 ((kbd "<C-f12>") 'nxhtml-mode-toggle))))
+  (custom-set-faces
+   '(mumamo-background-chunk-major
+     ((((class color) (min-colors 88) (background dark)) (:background "SteelBlue4")))) ; ここ
+   '(mumamo-background-chunk-submode1
+     ((((class color) (min-colors 88) (background dark)) (:background "SpringGreen4")))) ; ここ
+   ))
 
 (add-to-list 'ac-modes 'js2-mode)
 (lazyload (js2-mode) "js2-mode"
@@ -85,27 +98,26 @@
 ;; (add-to-list 'ac-modes 'web-mode)
 ;; (add-hook 'web-mode-hook 'user:web-mode)
 
-(req multi-web-mode
-     (setq mweb-default-major-mode 'html-mode)
-     ;; (setq mweb-default-major-mode 'html-helper-mode)
-     (setq mweb-tags
-	   '((php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")
-	     (js-mode "<script +\\(type=\"text/javascript\"\\|language=\"javascript\"\\)[^>]*>" "</script>")
-	     (html-mode " <<< HTML" "HTML")
-	     (smarty-mode "<!--{" "}-->")
-	     (css-mode "<style +type=\"text/css\"[^>]*>" "</style>")))
-     (setq mweb-filename-extensions '("php" "htm" "html" "ctp" "phtml" "php4" "php5" "tpl"))
-     (multi-web-global-mode 1)
-)
+;; (req multi-web-mode
+;;      (setq mweb-default-major-mode 'html-mode)
+;;      ;; (setq mweb-default-major-mode 'html-helper-mode)
+;;      (setq mweb-tags
+;; 	   '((php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")
+;; 	     (js-mode "<script +\\(type=\"text/javascript\"\\|language=\"javascript\"\\)[^>]*>" "</script>")
+;; 	     (html-mode " <<< HTML" "HTML")
+;; 	     (smarty-mode "<!--{" "}-->")
+;; 	     (css-mode "<style +type=\"text/css\"[^>]*>" "</style>")))
+;;      (setq mweb-filename-extensions '("php" "htm" "html" "ctp" "phtml" "php4" "php5" "tpl"))
+;;      (multi-web-global-mode 1)
+;; )
 
 (setq auto-mode-alist
       (append '(
-		;; ("\\.php[3-5]?$"			.	php-mode)
+		("\\.php[3-5]?$"			.	php-mode)
 		;; ("\\.tpl$"				.	smarty-mode)
 		;; ("\\.\\(html\\|tpl\\|php[3-5]?\\)$"	.	web-mode)
-      ;; (append '(("¥¥.html$"		.	nxhtml-mumamo-mode)
-      ;; 		("\\.php[3-5]?$"	.	nxhtml-mumamo-mode)
-      ;; 		("\\.tpl\\'"		.	smarty-html-mumamo-mode)
+      		("\\.html\\'"		.	nxhtml-mumamo-mode)
+      		("\\.tpl\\'"		.	smarty-html-mumamo-mode)
       		("\\.\\(js\\|json\\)$"	.	js2-mode)
       		("\\.css$"		.	css-mode)
 		) auto-mode-alist))

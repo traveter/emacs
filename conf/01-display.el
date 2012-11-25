@@ -17,10 +17,12 @@
 
 (tool-bar-mode -1)
 (mouse-wheel-mode t)
-(display-time)
-(which-function-mode 1)
-(show-paren-mode t)
-(delete-selection-mode 1)
+(my/idle-time-load 0.1
+		   (display-time)
+		   (which-function-mode 1)
+		   (show-paren-mode t)
+		   (delete-selection-mode 1)
+		   )
 (fset 'yes-or-no-p 'y-or-n-p)
 (add-hook 'before-save-hook 'delete-trailing-whitespace) ; 保存時に無駄なスペースを削除
 (setq-default show-trailing-whitespace t)
@@ -33,6 +35,7 @@
       icon-title-format "%b"
       column-number-mode t
       )
+
 (defface hlline-face
   '((((class color)
       (background dark))

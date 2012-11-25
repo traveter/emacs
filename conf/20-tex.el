@@ -2,12 +2,12 @@
 ;; yatex-mode の起動
 (setq auto-mode-alist
       (cons (cons "\\.tex$" 'yatex-mode) auto-mode-alist))
-(when (autoload-if-found 'yatex-mode "yatex" "Yet Another LaTeX mode" t)
-  (eval-after-load "yatex"
+(lazyload (yatex-mode) "yatex"
+;; (when (autoload-if-found 'yatex-mode "yatex" "Yet Another LaTeX mode" t)
+;;   (eval-after-load "yatex"
     (setq YaTeX-kanji-code 4
 	  tex-command "platex  -interaction=nonstopmode"
 	  dviprint-command-format "dvipdfmx %s"
-	  ;; dvi2-command "\"C:\\program files\\Adobe\\Reader 10.0\\Reader\\Acrord32.exe\""
 	  dvi2-command "SumatraPDF.exe -reuse-instance"
 	  )
     ;; dvi2-commandで自動的に拡張子を補完してくれるようにする設定
@@ -16,16 +16,15 @@
 	    ("ghostview\\|gv" . ".ps")
 	    ("acroread\\|pdf\\|Preview\\|TeXShop" . ".pdf")))
     ;; auto-complete-mode for latex
-    (require 'auto-complete-latex)
-    (setq ac-l-dict-directory (user:emacs-cache-path "ac-l-dict"))
-    (defun yatex-mode-hook-func ()
-      (interactive)
-      (local-set-key "\C-cf" 'fill-region)
-      (when (require 'auto-complete-latex nil t)
-	(ac-l-setup)
-	(auto-complete-mode t)))
+    (req auto-complete-latex
+	 (setq ac-l-dict-directory (user:emacs-cache-path "ac-l-dict"))
+	 (setq ac-modes (append ac-modes '(yatex-mode)))
+	 (define-key YaTeX-mode-map (kbd "C-c f") 'fill-region)
+	 (ac-l-setup)
+	 )
     )
-  (add-hook 'yatex-mode-hook 'yatex-mode-hook-func)
+    ;; ))
+(add-hook 'yatex-mode-hook 'yatex-mode-hook-func)
 
 
   ;; \documentclass[a4paper]{jarticle}

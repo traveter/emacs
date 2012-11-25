@@ -6,12 +6,8 @@
      "^\\s-*\\(?:\\(?:abstract\\|final\\)\\s-+\\)?protected\\s-+\\(?:static\\s-+\\)?function\\s-+\\(\\(?:\\sw\\|\\s_\\)+\\)\\s-*(" 1)
     ("Public Methods"
      "^\\s-*\\(?:\\(?:abstract\\|final\\)\\s-+\\)?public\\s-+\\(?:static\\s-+\\)?function\\s-+\\(\\(?:\\sw\\|\\s_\\)+\\)\\s-*(" 1)
-    ("Classes"
-     "^\\s-*class\\s-+\\(\\(?:\\sw\\|\\s_\\)+\\)\\s-*" 1)
-
-    ;("$value" "^\\s-*\\($+\\)\\([^(): ]+\\)" 2)
-    ("Class variable" "^\\s-*$this->\\([^(): ]+\\)" 1)
-
+    ("Classes" "^\\s-*class\\s-+\\(\\(?:\\sw\\|\\s_\\)+\\)\\s-*" 1)
+    ("Class variable" "^\\s-*var\\s-*\\$\\([^(): ]+\\);$" 1)
     ("All Functions"
      "^\\s-*\\(?:\\(?:abstract\\|final\\|private\\|protected\\|public\\|static\\)\\s-+\\)*function\\s-+\\(\\(?:\\sw\\|\\s_\\)+\\)\\s-*(" 1)
     )
@@ -20,6 +16,10 @@
 (add-hook 'php-mode-user-hook 'semantic-default-java-setup)
 (add-hook 'php-mode-hook
 	  '(lambda ()
+	     (req fill-column-indicator
+		  (local-set-key [f4] 'fci-mode)
+		  (fci-mode)
+		  )
 	     (imenu-add-to-menubar "Imenu")
 	     ;; (setq imenu-create-index-function 'semantic-create-imenu-index)
 	     ;; (setq imenu-generic-expression php-imenu-generic-expression)
@@ -71,9 +71,9 @@
 	    (set-face-background 'flymake-errline "red")
 	    (set-face-background 'flymake-warnline "blue")
 	    ;; キーバインド (flymake)
-	    (global-set-key (kbd "M-p") 'flymake-goto-prev-error)
-	    (global-set-key (kbd "M-n") 'flymake-goto-next-error)
-	    (global-set-key (kbd "C-c d") 'flymake-start-syntax-check)
+	    (define-keys php-mode-map ((kbd "M-p") 'flymake-goto-prev-error)
+	      ((kbd "M-n") 'flymake-goto-next-error)
+	      ((kbd "C-c d") 'flymake-start-syntax-check))
 	    (add-hook 'php-mode-user-hook 'flymake-php-load)
 	    )
        )))

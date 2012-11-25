@@ -17,7 +17,6 @@
 (add-hook 'java-mode-hook '(lambda () (hs-minor-mode 1)))
 (add-hook 'php-mode-hook '(lambda () (hs-minor-mode 1)))
 
-(require 'cl)
 (req tabbar
      (defun tabbar-buffer-groups ()
        "Return the list of group names the current buffer belongs to.

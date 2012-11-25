@@ -32,6 +32,8 @@
            (autoload function file docstring interactive type))
          t )))
 
+(defmacro my/init-load (&rest body)
+  `(add-hook 'after-init-hook (lambda () ,@body)))
 (defmacro my/idle-time-load (interval &rest body)
   `(add-hook 'after-init-hook (lambda ()
 				(run-with-idle-timer ,interval nil
@@ -59,7 +61,7 @@
 (add-hook 'emacs-lisp-mode-hook
   (lambda ()
     (add-hook 'after-save-hook 'auto-save-byte-compile-file nil t)))
-
-(req deferred)
+(require 'cl)
+;; (req deferred)
 ;; (req idle-require)
 ;; (idle-require-mode 1)

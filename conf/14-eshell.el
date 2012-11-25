@@ -49,6 +49,10 @@
     (pcomplete-here (pcomplete-here (eshell-complete-commands-list)))))
 
 (defun my-ac-eshell-mode ()
+  (req pcomplete
+       (ac-define-source pcomplete
+	 '((candidates . pcomplete-completions)))
+       )
   (setq ac-sources
         '(
 	  ac-source-pcomplete
@@ -74,10 +78,6 @@
 	       (setq eshell-cmpl-cycle-cutoff-length 5)
 	       (setq eshell-hist-ignoredups t)
 
-	       (req pcomplete
-	       	    (ac-define-source pcomplete
-	       	      '((candidates . pcomplete-completions)))
-	       	    )
 	       (my-ac-eshell-mode)
 	       (define-keys eshell-mode-map
 		 ((kbd "TAB") 'nm-eshell-pcomplete)
