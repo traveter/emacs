@@ -66,55 +66,59 @@
        ;; 	  (add-to-list 'ac-source 'ac-source-php-completion)
        ;; 	  (auto-complete-mode t)
        ;; 	  )
-       (req flymake-php
-	    ;; (setq flymake-run-in-place nil)
-	    (set-face-background 'flymake-errline "red")
-	    (set-face-background 'flymake-warnline "blue")
-	    ;; キーバインド (flymake)
-	    (define-keys php-mode-map ((kbd "M-p") 'flymake-goto-prev-error)
-	      ((kbd "M-n") 'flymake-goto-next-error)
-	      ((kbd "C-c d") 'flymake-start-syntax-check))
-	    (add-hook 'php-mode-user-hook 'flymake-php-load)
-	    )
+       ;; ;; flymake を使えない場合をチェック
+       ;; (defadvice flymake-can-syntax-check-file
+       ;; 	 (after my-flymake-can-syntax-check-file activate)
+       ;; 	 (cond
+       ;; 	  ((not ad-return-value))
+       ;; 	  ;; tramp 経由であれば、無効
+       ;; 	  ((and (fboundp 'tramp-list-remote-buffers)
+       ;; 		(memq (current-buffer) (tramp-list-remote-buffers)))
+       ;; 	   (setq ad-return-value nil))
+       ;; 	  ;; 書き込み不可ならば、flymakeは無効
+       ;; 	  ((not (file-writable-p buffer-file-name))
+       ;; 	   (setq ad-return-value nil))
+       ;; 	  ;; flymake で使われるコマンドが無ければ無効
+       ;; 	  ((let ((cmd (nth 0 (prog1
+       ;; 				 (funcall (flymake-get-init-function buffer-file-name))
+       ;; 			       (funcall (flymake-get-cleanup-function buffer-file-name))))))
+       ;; 	     (and cmd (not (executable-find cmd))))
+       ;; 	   (setq ad-return-value nil))
+       ;; 	  ))
+
+       ;; (req flymake-php
+       ;; 	    (add-hook 'php-mode-user-hook 'flymake-php-load))
+       ;; (req flymake
+       (load "emacs-flymake-master/flymake")
+	    (setq flymake-run-in-place nil
+		  flymake-number-of-errors-to-display 4
+		  )
+	    (defun my-popup-flymake-display-error ()
+	      (interactive)
+	      (let* ((line-no            (flymake-current-line-no))
+		     (line-err-info-list (nth 0 (flymake-find-err-info flymake-err-info
+								       line-no)))
+		     (count              (length line-err-info-list)))
+		(while (> count 0)
+		  (when line-err-info-list
+		    (let* ((file       (flymake-ler-file (nth (1- count)
+							      line-err-info-list)))
+			   (full-file (flymake-ler-full-file (nth (1- count)
+								  line-err-info-list)))
+			   (text      (flymake-ler-text (nth (1- count)
+							     line-err-info-list)))
+			   (line      (flymake-ler-line (nth (1- count)
+							     line-err-info-list))))
+		      (popup-tip (format "[%s] %s" line text))))
+		  (setq count (1- count)))))
+	    (eval-after-load "flymake"
+	      '(progn
+		 (set-face-background 'flymake-errline "red")
+		 (set-face-background 'flymake-warnline "blue")
+		 (define-keys php-mode-map ((kbd "M-p") 'flymake-goto-prev-error)
+		   ((kbd "M-n") 'flymake-goto-next-error)
+		   ;; ((kbd "C-c d") 'flymake-start-syntax-check))
+		   ((kbd "C-c d") 'my-popup-flymake-display-error))
+		 (add-hook 'php-mode-hook '(lambda () (flymake-mode)))
+		 ));;)
        )))
-
-;; flymake を使えない場合をチェック
-(defadvice flymake-can-syntax-check-file
-  (after my-flymake-can-syntax-check-file activate)
-  (cond
-   ((not ad-return-value))
-   ;; tramp 経由であれば、無効
-   ((and (fboundp 'tramp-list-remote-buffers)
-         (memq (current-buffer) (tramp-list-remote-buffers)))
-    (setq ad-return-value nil))
-   ;; 書き込み不可ならば、flymakeは無効
-   ((not (file-writable-p buffer-file-name))
-    (setq ad-return-value nil))
-   ;; flymake で使われるコマンドが無ければ無効
-   ((let ((cmd (nth 0 (prog1
-                          (funcall (flymake-get-init-function buffer-file-name))
-                        (funcall (flymake-get-cleanup-function buffer-file-name))))))
-      (and cmd (not (executable-find cmd))))
-    (setq ad-return-value nil))
-   ))
-
-(req popup
-     ;; flymake 現在行のエラーをpopup.elのツールチップで表示する
-     (defun flymake-display-err-menu-for-current-line ()
-       (interactive)
-       (let* ((line-no             (flymake-current-line-no))
-	      (line-err-info-list  (nth 0 (flymake-find-err-info flymake-err-info line-no))))
-	 (when line-err-info-list
-	   (let* ((count           (length line-err-info-list))
-		  (menu-item-text  nil))
-	     (while (> count 0)
-	       (setq menu-item-text (flymake-ler-text (nth (1- count) line-err-info-list)))
-	       (let* ((file       (flymake-ler-file (nth (1- count) line-err-info-list)))
-		      (line       (flymake-ler-line (nth (1- count) line-err-info-list))))
-		 (if file
-		     (setq menu-item-text (concat menu-item-text " - " file "(" (format "%d" line) ")"))))
-	       (setq count (1- count))
-	       (if (> count 0) (setq menu-item-text (concat menu-item-text "\n")))
-	       )
-	     (popup-tip menu-item-text)))))
-)

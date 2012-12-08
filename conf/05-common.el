@@ -5,6 +5,7 @@
 (global-set-key [f7] 'linum-mode)
 
 (setq abbrev-file-name (user:emacs-cache-path "abbrev_defs"))
+(setq save-abbrevs nil)
 
 ;; create backup file in ~/.emacs.d/backup
 (setq backup-directory-alist

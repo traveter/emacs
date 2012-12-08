@@ -61,7 +61,11 @@
 (add-hook 'emacs-lisp-mode-hook
   (lambda ()
     (add-hook 'after-save-hook 'auto-save-byte-compile-file nil t)))
+
 (require 'cl)
+;; (eval-when-compile (require 'cl))
+;; (setq byte-compile-warnings
+;;       '(free-vars unresolved callargs redefine obsolete noruntime cl-functions interactive-only make-local))
 ;; (req deferred)
 ;; (req idle-require)
 ;; (idle-require-mode 1)

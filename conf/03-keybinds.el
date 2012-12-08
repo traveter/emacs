@@ -51,8 +51,10 @@
      	     (remove-if
      	      (lambda(buffer)
      		(unless (string= (buffer-name buffer) "*eshell*")
-     		  (find (aref (buffer-name buffer) 0) " *")
-     		  ))
+     		  (or (find (aref (buffer-name buffer) 0) " *")
+		      (string-match "\\[.*\\]" (buffer-name buffer))
+		      )
+		  ))
      	      (buffer-list))))
      (tabbar-mode)
 

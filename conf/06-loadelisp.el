@@ -72,14 +72,15 @@
        (anti-qwerty "',.pyfgcrl=(aoeuidhtns;)-qjkxbmwvz\"<>PYFGCRL+{AOEUIDHTNS$}:QJKXBMWVZ?*_@[]/"
 		    "qwertyuiop@[asdfghjkl;:]zxcvbnm,./\QWERTYUIOP`{ASDFGHJKL+*}ZXCVBNM<>?_-=$()'"))
      )
-(when (autoload-if-found 'helm-mini "helm-config")
+(when (autoload-if-found 'helm-mini "helm-config" nil t)
   (global-set-key (kbd "C-c h") 'helm-mini)
   (eval-after-load "helm-config"
     '(progn
-	(global-set-keys ((kbd "C-c C-f") 'helm-find-files)
-			 ((kbd "C-c l") 'helm-recentf)
-			 ((kbd "C-o") 'helm-occur)
-		      ))))
+       (global-set-keys ((kbd "C-c C-f") 'helm-find-files)
+			((kbd "C-c l") 'helm-recentf)
+			((kbd "C-o") 'helm-occur)
+			))))
+
 (my/idle-time-load 6 (req generic-x))
 (my/idle-time-load 2
 		   (autoload 'yas-dropdown-prompt "dropdown-list" nil t)
