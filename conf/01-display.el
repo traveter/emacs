@@ -17,12 +17,32 @@
 
 (tool-bar-mode -1)
 (mouse-wheel-mode t)
-(my/idle-time-load 0.1
-		   (display-time)
-		   (which-function-mode 1)
-		   (show-paren-mode t)
-		   (delete-selection-mode 1)
-		   )
+;; (my/idle-time-load 0.1
+(my/init-load
+ (display-time)
+ (which-function-mode 1)
+ (show-paren-mode t)
+ (delete-selection-mode 1)
+ (defface hlline-face
+   '((((class color)
+       (background dark))
+      ;; (:background "dark slate gray"))
+      (:background "DimGrey"))
+     (((class color)
+       (background light))
+      (:background "ForestGreen"))
+     (t
+      ()))
+   "*Face used by hl-line.")
+ (setq hl-line-face 'hlline-face)
+ ;; (setq hl-line-face 'underline) ; 下線
+ (global-hl-line-mode)
+ (scroll-bar-mode -1)
+ (global-set-key [f6] 'toggle-scroll-bar)
+ (menu-bar-mode -1)
+ (global-set-key [f8] 'menu-bar-mode)
+ )
+(global-auto-revert-mode 1)
 (fset 'yes-or-no-p 'y-or-n-p)
 (add-hook 'before-save-hook 'delete-trailing-whitespace) ; 保存時に無駄なスペースを削除
 (setq-default show-trailing-whitespace t)
@@ -35,27 +55,6 @@
       icon-title-format "%b"
       column-number-mode t
       )
-
-(defface hlline-face
-  '((((class color)
-      (background dark))
-     ;; (:background "dark slate gray"))
-     (:background "DimGrey"))
-    (((class color)
-      (background light))
-     (:background "ForestGreen"))
-    (t
-     ()))
-  "*Face used by hl-line.")
-(setq hl-line-face 'hlline-face)
-;; (setq hl-line-face 'underline) ; 下線
-(global-hl-line-mode)
-
-(scroll-bar-mode -1)
-(global-set-key [f6] 'toggle-scroll-bar)
-
-(menu-bar-mode -1)
-(global-set-key [f8] 'menu-bar-mode)
 
 ;; (defun my-window-size-save ()
 ;;   (let* ((rlist (frame-parameters (selected-frame)))

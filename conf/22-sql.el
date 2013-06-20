@@ -8,6 +8,26 @@
 (autoload 'sql-ms "sql" "SQL Edit mode" t)
 (autoload 'master-mode "master" "Master mode minor mode." t)
 
+(eval-after-load 'sql-mode
+  '(progn
+     ;; SQL モードから SQLi へ送った SQL 文も SQLi ヒストリの対象とする
+     (defadvice sql-send-region (after sql-store-in-history)
+       "The region sent to the SQLi process is also stored in the history."
+       (let ((history (buffer-substring-no-properties start end)))
+	 (save-excursion
+	   (set-buffer sql-buffer)
+	   (message history)
+	   (if (and (funcall comint-input-filter history)
+		    (or (null comint-input-ignoredups)
+			(not (ring-p comint-input-ring))
+			(ring-empty-p comint-input-ring)
+			(not (string-equal (ring-ref comint-input-ring 0)
+					   history))))
+	       (ring-insert comint-input-ring history))
+	   (setq comint-save-input-ring-index comint-input-ring-index)
+	   (setq comint-input-ring-index nil))))
+     (ad-activate 'sql-send-region)
+     ))
 ;; ;; starting SQL mode loading sql-indent / sql-complete
 ;; (eval-after-load "sql"
 ;;   '(progn
@@ -45,21 +65,3 @@
                       (setq comint-output-filter-functions
                             'comint-truncate-buffer)))
           )
-
-;; SQL モードから SQLi へ送った SQL 文も SQLi ヒストリの対象とする
-(defadvice sql-send-region (after sql-store-in-history)
-  "The region sent to the SQLi process is also stored in the history."
-  (let ((history (buffer-substring-no-properties start end)))
-    (save-excursion
-      (set-buffer sql-buffer)
-      (message history)
-      (if (and (funcall comint-input-filter history)
-               (or (null comint-input-ignoredups)
-                   (not (ring-p comint-input-ring))
-                   (ring-empty-p comint-input-ring)
-                   (not (string-equal (ring-ref comint-input-ring 0)
-                                      history))))
-          (ring-insert comint-input-ring history))
-      (setq comint-save-input-ring-index comint-input-ring-index)
-      (setq comint-input-ring-index nil))))
-(ad-activate 'sql-send-region)

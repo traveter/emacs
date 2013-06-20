@@ -63,7 +63,6 @@
 
 ;; eshell
 (setq eshell-directory-name (user:emacs-cache-path "eshell/"))
-(add-to-list 'ac-modes 'eshell-mode)
 (global-set-key (kbd "C-c e") 'eshell)
 (add-hook 'eshell-mode-hook
           #'(lambda ()
@@ -77,7 +76,6 @@
 	       ;;補完候補がこの数値以下だとサイクルせずに候補表示
 	       (setq eshell-cmpl-cycle-cutoff-length 5)
 	       (setq eshell-hist-ignoredups t)
-
 	       (my-ac-eshell-mode)
 	       (define-keys eshell-mode-map
 		 ((kbd "TAB") 'nm-eshell-pcomplete)
@@ -97,6 +95,8 @@
 	       )))
 (eval-after-load "em-alias"
   '(progn
+     (eshell/alias "javac" "javac -J-Dfile.encoding=UTF-8 $*")
+     (eshell/alias "java" "java -Dfile.encoding=UTF-8 $*")
      ))
 
 ;; より下に記述した物が PATH の先頭に追加されます

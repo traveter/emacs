@@ -24,17 +24,22 @@
   (setq skk-egg-like-newline t)
   ;; 対応する閉括弧を自動的に挿入する
   (setq skk-auto-insert-paren t)
-  ;; 句読点ではなくカンマやピリオドを入力
-  (setq skk-kutouten-type 'en)
+  ;; ;; 句読点ではなくカンマやピリオドを入力
+  ;; (setq skk-kutouten-type 'en)
   ;; 改行のキーバインドが重複するので変更
   (setq skk-kakutei-key "\C-o")
+  ;; 句読点
+  (setq skk-kuten-touten-alist '(
+				 (jp . ("。" . "、"))
+				 (en . ("." . ","))
+				 ))
   )
-;; 句読点を動的に決定する
-(add-hook 'skk-mode-hook
-          (lambda ()
-            (save-excursion
-              (goto-char 0)
-              (make-local-variable 'skk-kutouten-type)
-              (if (re-search-forward "。" 10000 t)
-                  (setq skk-kutouten-type 'en)
-                (setq skk-kutouten-type 'jp)))))
+;; ;; 句読点を動的に決定する
+;; (add-hook 'skk-mode-hook
+;;           (lambda ()
+;;             (save-excursion
+;;               (goto-char 0)
+;;               (make-local-variable 'skk-kutouten-type)
+;;               (if (re-search-forward "。" 10000 t)
+;;                   (setq skk-kutouten-type 'en)
+;;                 (setq skk-kutouten-type 'jp)))))

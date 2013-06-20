@@ -2,6 +2,7 @@
 ;; yatex-mode の起動
 (setq auto-mode-alist
       (cons (cons "\\.tex$" 'yatex-mode) auto-mode-alist))
+(setq YaTeX-kanji-code 4)
 (lazyload (yatex-mode) "yatex"
 ;; (when (autoload-if-found 'yatex-mode "yatex" "Yet Another LaTeX mode" t)
 ;;   (eval-after-load "yatex"

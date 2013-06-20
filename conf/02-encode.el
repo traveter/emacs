@@ -8,8 +8,8 @@
 (set-buffer-file-coding-system ' utf-8)
 (prefer-coding-system 'utf-8)
 
-;(setq default-file-name-coding-system 'japanese-shift-jis-dos)
-(setq default-file-name-coding-system 'utf-8)
+(setq default-file-name-coding-system 'japanese-shift-jis-dos)
+;(setq default-file-name-coding-system 'utf-8)
 ;(setq default-buffer-file-coding-system ' utf-8)
 
 (when (boundp 'show-trailing-whitespace)

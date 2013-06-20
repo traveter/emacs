@@ -1,0 +1,96 @@
+* 設定ファイル
+  init-loader.elを用いて設定ファイルを分割読み込み
+  - 00-init.el
+    以下のサイトを参照
+    http://d.hatena.ne.jp/jimo1001/20090921/1253525484
+  - 01-display.el
+    emacsのウィンドウ、フォント、色等の設定
+  - 02-encode.el
+    エンコードの設定(UTF-8)
+  - 03-keybinds.el
+    キーバインドのカスタマイズ
+  - 04-skk.el
+    日本語変換にDDSKKを用いる
+    プレフィックスキーの設定
+  - 05-common.el
+    メジャーモード共通の設定
+  - 06-loadelisp.el
+    外部elispの読み込み
+  - 11-navi2ch_riece.el
+  - 14-eshell.el
+    emacsのshell実装 eshellの設定
+  - 15-c-mode.el
+  - 16-php-mode.el
+  - 17-java-mode.el
+  - 18-smarty-template.el
+  - 19-mode.el
+  - 20-tex.el
+  - 21-maxima.el
+  - 22-sql.el
+* 使用elisp
+  - helm
+    https://github.com/emacs-helm/helm
+  - auto-complete
+    https://github.com/m2ym/auto-complete
+  - yasnippet
+    https://github.com/capitaomorte/yasnippet
+  - yatex
+    http://www.yatex.org/
+  - emacs-flymake
+    https://github.com/illusori/emacs-flymake
+  - emacs-nav
+    https://code.google.com/p/emacs-nav/
+  - auto-complete-latex
+    http://d.hatena.ne.jp/tequilasunset/20100202/p1
+  - ecb
+    http://ecb.sourceforge.net/
+  - init-loader
+    https://gist.github.com/1021706
+  - sr-speedbar
+    https://github.com/emacsmirror/sr-speedbar
+  - browser-kill-ring
+    https://github.com/browse-kill-ring/browse-kill-ring
+  - e2wm
+    https://github.com/kiwanami/emacs-window-manager
+  - window-layout
+    https://github.com/kiwanami/emacs-window-layout
+  - Daredevil SKK (DDSKK)
+    http://openlab.ring.gr.jp/skk/ddskk-ja.html
+  - TRAMP
+    http://www.gnu.org/software/tramp/
+  - fill-column-indicator
+    https://github.com/alpaker/Fill-Column-Indicator
+  - Smarty-mode
+    http://lisp.morinie.fr/smarty/
+  - multi-web-mode
+    https://github.com/fgallina/multi-web-mode
+  - web-mode
+    http://web-mode.org/
+  - html-helper-mode
+    http://www.nongnu.org/baol-hth/
+  - nxhtml
+    http://ourcomments.org/Emacs/nXhtml/doc/nxhtml.html
+  - js2-mode
+    http://code.google.com/p/js2-mode/
+  - php-mode
+    https://github.com/ejmr/php-mode
+  - php-eldoc
+    https://github.com/zenozeng/php-eldoc
+  - powerline
+    https://github.com/milkypostman/powerline
+  - zencoding
+    https://github.com/rooney/zencoding
+  - guide-key
+    https://github.com/kbkbkbkb1/guide-key
+  - popwin-el
+    https://github.com/m2ym/popwin-el
+  - ace-jump-mode
+    https://github.com/winterTTr/ace-jump-mode
+  - less-css-mode
+    https://github.com/purcell/less-css-mode/
+  - malabar-mode
+    https://github.com/espenhw/malabar-mode
+  - coffee-mode
+    https://github.com/defunkt/coffee-mode
+  - haskell-mode
+    https://github.com/haskell/haskell-mode

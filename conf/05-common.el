@@ -1,9 +1,3 @@
-;; (require 'linum)
-;; (global-linum-mode t)
-;; (setq linum-format "%4d")
-
-(global-set-key [f7] 'linum-mode)
-
 (setq abbrev-file-name (user:emacs-cache-path "abbrev_defs"))
 (setq save-abbrevs nil)
 
@@ -14,7 +8,7 @@
 ;; create auto-save file in ~/.emacs.d/backup
 (setq auto-save-file-name-transforms
       `((".*", (user:emacs-cache-path "backup")) t))
-
+(setq fill-column 80)
 ;; (setq bookmark-file (user:emacs-cache-path "bmk"))
 ;; ;; ブックマークを変更したら即保存する
 ;; (setq bookmark-save-flag 1)
@@ -36,6 +30,13 @@
 ;;   (recentf-mode 1))
 
 (my/init-load
+ (auto-insert-mode)
+ (setq auto-insert-directory (user:emacs-path "autoinsert/"))
+ (setq auto-insert-alist
+       (append '(
+		 ("\\.tex" . "default.tex")
+		 ) auto-insert-alist))
+ (add-hook 'find-file-hooks 'auto-insert)
  (defvar my-recentf-list-prev nil)
 
  (defadvice recentf-save-list
