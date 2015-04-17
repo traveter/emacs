@@ -1,3 +1,5 @@
+;; (setq init-loader-show-log-after-init nil)
+
 ;; マクロ定義
 (defmacro req (lib &rest body)
   `(when (locate-library ,(symbol-name lib))
@@ -36,16 +38,14 @@
   `(add-hook 'after-init-hook (lambda () ,@body)))
 (defmacro my/idle-time-load (interval &rest body)
   `(add-hook 'after-init-hook (lambda ()
-				(run-with-idle-timer ,interval nil
-						     (lambda () ,@body)))))
+                                (run-with-idle-timer ,interval nil
+                                                     (lambda () ,@body)))))
 
 (defun user:emacs-path (path)
-  (concat user-emacs-directory path)
-  )
+  (concat user-emacs-directory path))
 
 (defun user:emacs-cache-path (path)
-  (concat user-emacs-directory "cache/" path)
-  )
+  (concat user-emacs-directory "cache/" path))
 
 ;;; initsフォルダのみ、保存時に自動コンパイルして即反映させる
 (defun auto-save-byte-compile-file ()
@@ -54,9 +54,9 @@
   (message buffer-file-name)
   (if (equal (expand-file-name (user:emacs-path "conf/")) (file-name-directory buffer-file-name))
       (progn
-	(byte-compile-file buffer-file-name t)
-	(message (concat "byte-compile " buffer-file-name))
-	)))
+        (byte-compile-file buffer-file-name t)
+        (message (concat "byte-compile " buffer-file-name))
+        )))
 
 (add-hook 'emacs-lisp-mode-hook
   (lambda ()

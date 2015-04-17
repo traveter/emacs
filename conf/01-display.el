@@ -3,22 +3,31 @@
        '((width            . 110)
          (height           . 60)
          (top              . 40)
-	 (left             . 8)
-	 ;(alpha            . 98)
-	 (font             . "Ricty")
-	 (cursor-color     . "LightSkyBlue")
-	 ;; (background-color . "DimGrey")
-	 (background-color . "DarkSlateGrey")
-	 (foreground-color . "white")
-	 )
+         (left             . 8)
+         ;(alpha            . 98)
+         (font             . "Ricty")
+         (cursor-color     . "LightSkyBlue")
+         ;; (background-color . "DimGrey")
+         (background-color . "DarkSlateGrey")
+         (foreground-color . "white")
+         (left-fringe      . 1)
+         (right-fringe      . 1)
+         )
        initial-frame-alist))
 (setq default-frame-alist initial-frame-alist)
 ;(set-default-font "-outline-Ricty-normal-normal-normal-*-16-*-*-*-c-*-iso8859-1")
 
 (tool-bar-mode -1)
 (mouse-wheel-mode t)
+(scroll-bar-mode -1)
+(global-set-key [f6] 'toggle-scroll-bar)
+(menu-bar-mode -1)
+(global-set-key [f8] 'menu-bar-mode)
 ;; (my/idle-time-load 0.1
+
 (my/init-load
+ (setq display-time-string-forms
+       '((format "%s/%s(%s) %s:%s" month day dayname 24-hours minutes)))
  (display-time)
  (which-function-mode 1)
  (show-paren-mode t)
@@ -33,28 +42,23 @@
       (:background "ForestGreen"))
      (t
       ()))
-   "*Face used by hl-line.")
+   "*Face used by hl-line." :group 'font-lock-highlighting-faces)
  (setq hl-line-face 'hlline-face)
  ;; (setq hl-line-face 'underline) ; 下線
- (global-hl-line-mode)
- (scroll-bar-mode -1)
- (global-set-key [f6] 'toggle-scroll-bar)
- (menu-bar-mode -1)
- (global-set-key [f8] 'menu-bar-mode)
+ ;; (global-hl-line-mode)
  )
-(global-auto-revert-mode 1)
+;; (global-auto-revert-mode 1)
 (fset 'yes-or-no-p 'y-or-n-p)
-(add-hook 'before-save-hook 'delete-trailing-whitespace) ; 保存時に無駄なスペースを削除
+;; (add-hook 'before-save-hook 'delete-trailing-whitespace) ; 保存時に無駄なスペースを削除
 (setq-default show-trailing-whitespace t)
-(set-face-background ' trailing-whitespace "SkyBlue")
+(set-face-background 'trailing-whitespace "SkyBlue")
 
 (setq make-backup-files nil
       visible-bell t
       inhibit-startup-message t
       frame-title-format "%b (%f)"
       icon-title-format "%b"
-      column-number-mode t
-      )
+      column-number-mode t)
 
 ;; (defun my-window-size-save ()
 ;;   (let* ((rlist (frame-parameters (selected-frame)))
